@@ -1,0 +1,21 @@
+{
+  "name": "code-critters",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "electron": "^1.6.11",
+    "react-scripts": "1.0.10",
+    "concurrently": "^3.5.0"
+  },
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  },
+  "main": "src/electron-starter.js",
+  "scripts": {
+    "start": "concurrently --kill-others \"react-scripts start\" \"electron .\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
