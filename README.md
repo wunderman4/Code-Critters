@@ -1,3 +1,36 @@
+#Code Critters!
+###Getting started
+run: 
+* `npm install` 
+* `npm start`
+
+depending on load time you may need to hit `ctrl+r` to reload electron
+
+Once running every `ctrl+s` will save and auto recompile and reload like a normal create-react-app
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
