@@ -29,10 +29,18 @@ body {
 }
 
 .circle.user {
+  background: url(./images/lizBlack.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 8em;
   background-color: #00e1ff;
 }
 
 .circle.enemy {
+  background: url(./images/critter.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 7em;
   background-color: #ff198e;
 }
 

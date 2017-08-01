@@ -3,18 +3,19 @@ import React, { Component } from "react";
 class GameBoard extends Component {
   state = {
     tiles: [
-      { player: "", direction: "right", x: 0, y: 0 },
-      { player: "enemy", direction: "right", x: 1, y: 0 },
-      { player: "enemy", direction: "right", x: 2, y: 0 },
-      { player: "", direction: "right", x: 0, y: 1 },
-      { player: "user", direction: "right", x: 1, y: 1 },
-      { player: "", direction: "right", x: 2, y: 1 },
-      { player: "enemy", direction: "right", x: 0, y: 2 },
-      { player: "", direction: "right", x: 1, y: 2 },
-      { player: "enemy", direction: "right", x: 2, y: 2 }
+      { player: "", direction: "north", x: 0, y: 0 },
+      { player: "enemy", direction: "north", x: 1, y: 0 },
+      { player: "enemy", direction: "north", x: 2, y: 0 },
+      { player: "", direction: "north", x: 0, y: 1 },
+      { player: "user", direction: "north", x: 1, y: 1 },
+      { player: "", direction: "north", x: 2, y: 1 },
+      { player: "enemy", direction: "north", x: 0, y: 2 },
+      { player: "", direction: "north", x: 1, y: 2 },
+      { player: "enemy", direction: "north", x: 2, y: 2 }
     ]
   };
 
+  // Test movement of Player
   move = e => {
     //console.log(e.key);
     switch (e.key) {
@@ -35,6 +36,7 @@ class GameBoard extends Component {
     }
   };
   componentDidMount() {
+    // window. needs to be removed along with move
     window.addEventListener("keydown", this.move);
     console.log(JSON.stringify(this.state.tiles));
   }
