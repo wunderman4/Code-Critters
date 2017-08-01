@@ -1,5 +1,7 @@
 #Code Critters!
+
 ###Getting started
+
 run: 
 * `npm install` 
 * `npm start`
