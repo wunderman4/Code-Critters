@@ -51,3 +51,18 @@ body {
 .circle.enemy.active {
   box-shadow: inset 0 0 10px palegreen;
 }
+
+/*Direction transforming */
+.north {
+  transform: rotate(0deg);
+}
+
+.east {
+  transform: rotate(90deg);
+}
+.south {
+  transform: rotate(180deg);
+}
+.west {
+  transform: rotate(270deg);
+}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Tile from "./Tile.js";
 
 class GameBoard extends Component {
   state = {
@@ -17,11 +18,25 @@ class GameBoard extends Component {
     ]
   };
 
+  rotate = board => {
+    board.map(tile => {
+      if (tile.player === "user") {
+        tile.direction = "east";
+      }
+      this.setState(() => {
+        return {
+          tiles: board
+        };
+      });
+    });
+  };
+
   // Test movement of Player
   move = e => {
     //console.log(e.key);
     switch (e.key) {
       case "ArrowRight":
+        this.rotate(this.state.tiles);
         console.log("right");
         break;
       case "ArrowUp":
@@ -45,10 +60,17 @@ class GameBoard extends Component {
   render() {
     return (
       <div className="board">
-        {this.state.tiles.map(tile =>
-          <div key={`${tile.x}-${tile.y}`} className="square">
-            <div className={`circle ${tile.player}`} />
-          </div>
+        {this.state.tiles.map(t =>
+          // <div key={`${t.x}-${t.y}`} className="square">
+          //   <div className={` north circle ${t.player}`} />
+          // </div>
+          <Tile
+            key={`${t.x}-${t.y}`}
+            player={t.player}
+            direction={t.direction}
+            x={t.x}
+            y={t.y}
+          />
         )}
       </div>
     );
