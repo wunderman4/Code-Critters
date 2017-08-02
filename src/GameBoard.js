@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 class GameBoard extends Component {
   state = {
+    // concider valid actio nstate to pass in actions and check if valid
+    // pass in state,
     tiles: [
       { player: "", direction: "north", x: 0, y: 0 },
       { player: "enemy", direction: "north", x: 1, y: 0 },
