@@ -1,34 +1,49 @@
 import React, { Component } from "react";
 import Tile from "./Tile.js";
 
-class GameBoard extends Component {
-  state = {
-    // concider valid actio nstate to pass in actions and check if valid
-    // pass in state,
-    tiles: [
-      { player: "", direction: "north", x: 0, y: 0 },
-      { player: "enemy", direction: "north", x: 1, y: 0 },
-      { player: "enemy", direction: "north", x: 2, y: 0 },
-      { player: "", direction: "north", x: 0, y: 1 },
-      { player: "user", direction: "north", x: 1, y: 1 },
-      { player: "", direction: "north", x: 2, y: 1 },
-      { player: "enemy", direction: "north", x: 0, y: 2 },
-      { player: "", direction: "north", x: 1, y: 2 },
-      { player: "enemy", direction: "north", x: 2, y: 2 }
-    ]
-  };
+// Used for Tiles State and Tile Props
+// Direction
+const DIRECTION_NORTH = "north";
+const DIRECTION_SOUTH = "south";
+const DIRECTION_EAST = "east";
+const DIRECTION_WEST = "west";
+//Player
+const PLAYER_ENEMY = "enemy";
+const PLAYER_USER = "user";
+const PLAYER_EMPTY = "";
 
+class GameBoard extends Component {
+  constructor() {
+    super();
+    this.state = {
+      // concider valid actio nstate to pass in actions and check if valid
+      // pass in state,
+      tiles: [
+        { player: "", direction: DIRECTION_NORTH, x: 0, y: 0 },
+        { player: "enemy", direction: DIRECTION_NORTH, x: 1, y: 0 },
+        { player: "enemy", direction: DIRECTION_NORTH, x: 2, y: 0 },
+        { player: "", direction: DIRECTION_NORTH, x: 0, y: 1 },
+        { player: "user", direction: DIRECTION_NORTH, x: 1, y: 1 },
+        { player: "", direction: DIRECTION_NORTH, x: 2, y: 1 },
+        { player: "enemy", direction: DIRECTION_NORTH, x: 0, y: 2 },
+        { player: "", direction: DIRECTION_NORTH, x: 1, y: 2 },
+        { player: "enemy", direction: DIRECTION_NORTH, x: 2, y: 2 }
+      ]
+    };
+    this.rotate.bind(this);
+  }
   rotate = board => {
-    board.map(tile => {
-      if (tile.player === "user") {
-        tile.direction = "east";
-      }
-      this.setState(() => {
-        return {
-          tiles: board
-        };
-      });
-    });
+    const newBoard = board.map(
+      tile =>
+        tile.player === "user" ? { ...tile, direction: DIRECTION_EAST } : tile
+
+      //   this.setState(() => {
+      //     return {
+      //       tiles: board
+      //     };
+      //   });
+    );
+    return newBoard;
   };
 
   // Test movement of Player
@@ -36,7 +51,13 @@ class GameBoard extends Component {
     //console.log(e.key);
     switch (e.key) {
       case "ArrowRight":
-        this.rotate(this.state.tiles);
+        console.log(this.state);
+        const updateTiles = this.rotate(this.state.tiles);
+        console.log(updateTiles);
+        this.setState({
+          tiles: updateTiles
+        });
+
         console.log("right");
         break;
       case "ArrowUp":
@@ -58,6 +79,7 @@ class GameBoard extends Component {
     console.log(JSON.stringify(this.state.tiles));
   }
   render() {
+    console.log(this.state.tiles);
     return (
       <div className="board">
         {this.state.tiles.map(t =>
