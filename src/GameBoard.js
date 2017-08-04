@@ -1,16 +1,6 @@
 import React, { Component } from "react";
+import * as C from "./Constants.js";
 import Tile from "./Tile.js";
-
-// Used for Tiles State and Tile Props
-// Direction
-const DIRECTION_NORTH = "north";
-const DIRECTION_SOUTH = "south";
-const DIRECTION_EAST = "east";
-const DIRECTION_WEST = "west";
-//Player
-const PLAYER_ENEMY = "enemy";
-const PLAYER_USER = "user";
-const PLAYER_EMPTY = "";
 
 class GameBoard extends Component {
   constructor() {
@@ -19,15 +9,15 @@ class GameBoard extends Component {
       // concider valid actio nstate to pass in actions and check if valid
       // pass in state,
       tiles: [
-        { player: "", direction: DIRECTION_NORTH, x: 0, y: 0 },
-        { player: "enemy", direction: DIRECTION_NORTH, x: 1, y: 0 },
-        { player: "enemy", direction: DIRECTION_NORTH, x: 2, y: 0 },
-        { player: "", direction: DIRECTION_NORTH, x: 0, y: 1 },
-        { player: "user", direction: DIRECTION_NORTH, x: 1, y: 1 },
-        { player: "", direction: DIRECTION_NORTH, x: 2, y: 1 },
-        { player: "enemy", direction: DIRECTION_NORTH, x: 0, y: 2 },
-        { player: "", direction: DIRECTION_NORTH, x: 1, y: 2 },
-        { player: "enemy", direction: DIRECTION_NORTH, x: 2, y: 2 }
+        { player: C.PLAYER_EMPTY, direction: C.DIRECTION_NORTH, x: 0, y: 0 },
+        { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 1, y: 0 },
+        { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 2, y: 0 },
+        { player: C.PLAYER_EMPTY, direction: C.DIRECTION_NORTH, x: 0, y: 1 },
+        { player: "user", direction: C.DIRECTION_NORTH, x: 1, y: 1 },
+        { player: C.PLAYER_EMPTY, direction: C.DIRECTION_NORTH, x: 2, y: 1 },
+        { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 0, y: 2 },
+        { player: C.PLAYER_EMPTY, direction: C.DIRECTION_NORTH, x: 1, y: 2 },
+        { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 2, y: 2 }
       ]
     };
     this.rotate.bind(this);
@@ -35,7 +25,7 @@ class GameBoard extends Component {
   rotate = board => {
     const newBoard = board.map(
       tile =>
-        tile.player === "user" ? { ...tile, direction: DIRECTION_EAST } : tile
+        tile.player === "user" ? { ...tile, direction: C.DIRECTION_EAST } : tile
 
       //   this.setState(() => {
       //     return {
