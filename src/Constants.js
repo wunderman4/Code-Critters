@@ -8,4 +8,4 @@ export const DIRECTION_WEST = "west";
 //Player
 export const PLAYER_ENEMY = "enemy";
 export const PLAYER_USER = "user";
-export const PLAYER_EMPTY = "";
+export const PLAYER_OPEN = "";
