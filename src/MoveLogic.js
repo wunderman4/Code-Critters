@@ -1,26 +1,7 @@
-import React from "react";
-//import GameBoard from "./GameBoard.js";
 import * as C from "./Constants.js";
 
-inputChecker = (userInput, boardState, userState) => {
-  switch (userInput) {
-    case "move":
-      // run check funtion
-      break;
-    case "counterClockwise":
-      rotate(userInput, userState);
-      break;
-    case "clockwise":
-      // check current position and make adjustments
-      break;
-    case "stay":
-      break;
-    default:
-      break;
-  }
-};
-// cd stands for UserState
-rotate = (input, us) => {
+export function rotate(input, us) {
+  // input == usermove, us == UserState
   let newDirection = "";
   switch (us.direction) {
     case C.DIRECTION_NORTH:
@@ -54,12 +35,96 @@ rotate = (input, us) => {
     default:
       break;
   }
-  const newBoard = this.state.tiles.map(
-    tile => (tile.player === "user" ? { ...tile, direction: direction } : tile)
-  );
-  this.setState({
-    tiles: newBoard
-  });
-};
+  return newDirection;
+}
 
-export default inputChecker;
+export function move(us, gb) {
+  // input = usermove, us == userState, gb  == gameBoard
+  var targetData = {
+    Player: "",
+    Direction: "",
+    XPos: "",
+    YPos: ""
+  };
+  var valid = true;
+
+  // Checking for out of bounds moves.
+  if (us.x === 0 && us.direction === C.DIRECTION_WEST) {
+    valid = false;
+    console.log(`Cant move ${us.direction}`);
+  } else if (us.x === 2 && us.direction === C.DIRECTION_EAST) {
+    valid = false;
+    console.log(`Cant move ${us.direction}`);
+  } else if (us.y === 0 && us.direction === C.DIRECTION_NORTH) {
+    valid = false;
+    console.log(`Cant move ${us.direction}`);
+  } else if (us.y === 2 && us.direction === C.DIRECTION_SOUTH) {
+    valid = false;
+    console.log(`Cant move ${us.direction}`);
+  }
+
+  // Gathering target position data.
+  if (valid) {
+    switch (us.direction) {
+      case C.DIRECTION_NORTH:
+        // check if enemy is north of player and facing south
+        gb.forEach(tile => {
+          if (tile.x === us.x && tile.y === us.y - 1) {
+            targetData.XPos = tile.x;
+            targetData.YPos = tile.y;
+            targetData.Direction = tile.direction;
+            targetData.Player = tile.player;
+          }
+        });
+        console.log(targetData);
+        break;
+      case C.DIRECTION_SOUTH:
+        // check if enemy is south of player and facing north
+        gb.forEach(tile => {
+          if (tile.x === us.x && tile.y === us.y + 1) {
+            targetData.XPos = tile.x;
+            targetData.YPos = tile.y;
+            targetData.Direction = tile.direction;
+            targetData.Player = tile.player;
+          }
+        });
+        console.log(targetData);
+        break;
+      case C.DIRECTION_EAST:
+        //check if enemy is east of player and facing west
+        gb.forEach(tile => {
+          if (tile.x === us.x + 1 && tile.y === us.y) {
+            targetData.XPos = tile.x;
+            targetData.YPos = tile.y;
+            targetData.Direction = tile.direction;
+            targetData.Player = tile.player;
+          }
+        });
+        console.log(targetData);
+        break;
+      case C.DIRECTION_WEST:
+        // check if enemy is west of player and facing east
+        gb.forEach(tile => {
+          if (tile.x === us.x - 1 && tile.y === us.y) {
+            targetData.XPos = tile.x;
+            targetData.YPos = tile.y;
+            targetData.Direction = tile.direction;
+            targetData.Player = tile.player;
+          }
+        });
+        console.log(targetData);
+        break;
+      default:
+        break;
+    }
+
+    if (targetData.Direction === C.DIRECTION_NULL) {
+      // then move the user to the target tile.
+    } else if (
+      targetData.targetPlayer === C.PLAYER_ENEMY &&
+      targetData.targetDirection !== C.DIRECTION_NULL
+    ) {
+      // Do something.....
+    }
+  }
+}
