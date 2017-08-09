@@ -14,7 +14,7 @@ class GameBoard extends Component {
       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_SOUTH, x: 2, y: 1 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 0, y: 2 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 2 },
-      { player: C.PLAYER_USER, direction: C.DIRECTION_NORTH, x: 2, y: 2 }
+      { player: C.PLAYER_USER, direction: C.DIRECTION_WEST, x: 2, y: 2 }
     ]
   };
 
@@ -37,6 +37,9 @@ class GameBoard extends Component {
         break;
       case "ArrowUp":
         const updatedBoard = move(userState, currentBoard);
+        this.setState({
+          tiles: updatedBoard
+        });
         console.log(direction);
         break;
       case "ArrowLeft":

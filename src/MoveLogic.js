@@ -67,7 +67,7 @@ export function move(us, gb) {
   if (valid) {
     switch (us.direction) {
       case C.DIRECTION_NORTH:
-        // check if enemy is north of player and facing south
+        // Gather properties of tile South of current position
         gb.forEach(tile => {
           if (tile.x === us.x && tile.y === us.y - 1) {
             targetData.XPos = tile.x;
@@ -79,7 +79,7 @@ export function move(us, gb) {
         console.log(targetData);
         break;
       case C.DIRECTION_SOUTH:
-        // check if enemy is south of player and facing north
+        // Gather properties of tile North of current position
         gb.forEach(tile => {
           if (tile.x === us.x && tile.y === us.y + 1) {
             targetData.XPos = tile.x;
@@ -91,7 +91,7 @@ export function move(us, gb) {
         console.log(targetData);
         break;
       case C.DIRECTION_EAST:
-        //check if enemy is east of player and facing west
+        //Gather properties of tile West of current position
         gb.forEach(tile => {
           if (tile.x === us.x + 1 && tile.y === us.y) {
             targetData.XPos = tile.x;
@@ -103,7 +103,7 @@ export function move(us, gb) {
         console.log(targetData);
         break;
       case C.DIRECTION_WEST:
-        // check if enemy is west of player and facing east
+        // Gather properties of tile East of current position
         gb.forEach(tile => {
           if (tile.x === us.x - 1 && tile.y === us.y) {
             targetData.XPos = tile.x;
@@ -118,13 +118,26 @@ export function move(us, gb) {
         break;
     }
 
-    if (targetData.Direction === C.DIRECTION_NULL) {
-      // then move the user to the target tile.
-    } else if (
-      targetData.targetPlayer === C.PLAYER_ENEMY &&
-      targetData.targetDirection !== C.DIRECTION_NULL
+    if (
+      targetData.Direction === C.DIRECTION_NULL ||
+      (targetData.targetPlayer === C.PLAYER_ENEMY &&
+        targetData.targetDirection !== C.DIRECTION_NULL)
     ) {
-      // Do something.....
+      // then move the user to the target tile.
+      targetData.player = C.PLAYER_USER;
+      targetData.direction = us.direction;
+      us.player = C.PLAYER_OPEN;
+      us.direction = C.DIRECTION_NULL;
+      // need to map or foreach new positions into gameboard then return it ----------- needs work
+      const newBoard = gb.forEach(tile => {
+        if (tile.x === targetData.XPos && tile.y === targetData.YPos) {
+          tile.direction = targetData.direction;
+          tile.player = targetData.player;
+        }
+      });
+      return newBoard;
+    } else {
+      // bounce
     }
   }
 }
