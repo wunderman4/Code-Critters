@@ -9,12 +9,19 @@ class GameBoard extends Component {
       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 0, y: 0 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 0 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 2, y: 0 },
+      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 0 },
       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_EAST, x: 0, y: 1 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 1 },
       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 2, y: 1 },
+      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 1 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 0, y: 2 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 2 },
-      { player: C.PLAYER_USER, direction: C.DIRECTION_WEST, x: 2, y: 2 }
+      { player: C.PLAYER_USER, direction: C.DIRECTION_WEST, x: 2, y: 2 },
+      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 2 },
+      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 0, y: 3 },
+      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 1, y: 3 },
+      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 2, y: 3 },
+      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 3 }
     ]
   };
 
@@ -70,3 +77,13 @@ class GameBoard extends Component {
 }
 
 export default GameBoard;
+
+//       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 0, y: 0 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 0 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 2, y: 0 },
+//       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_EAST, x: 0, y: 1 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 1 },
+//       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 2, y: 1 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 0, y: 2 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 2 },
+//       { player: C.PLAYER_USER, direction: C.DIRECTION_WEST, x: 2, y: 2 }

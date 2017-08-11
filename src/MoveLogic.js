@@ -40,7 +40,7 @@ export function rotate(input, us) {
 
 export function move(us, gb) {
   // input = usermove, us == userState, gb  == gameBoard
-  const targetData = {
+  let targetData = {
     Player: "",
     Direction: "",
     XPos: "",
@@ -48,16 +48,13 @@ export function move(us, gb) {
   };
 
   // Gathering target position data.
-  if (BoundsCheck(us)) {
+  if (BoundsCheck(us, gb)) {
     switch (us.direction) {
       case C.DIRECTION_NORTH:
         // Gather properties of tile South of current position
         gb.forEach(tile => {
           if (tile.x === us.x && tile.y === us.y - 1) {
-            targetData.XPos = tile.x;
-            targetData.YPos = tile.y;
-            targetData.Direction = tile.direction;
-            targetData.Player = tile.player;
+            targetData = targeting(targetData, tile);
           }
         });
         break;
@@ -65,10 +62,7 @@ export function move(us, gb) {
         // Gather properties of tile North of current position
         gb.forEach(tile => {
           if (tile.x === us.x && tile.y === us.y + 1) {
-            targetData.XPos = tile.x;
-            targetData.YPos = tile.y;
-            targetData.Direction = tile.direction;
-            targetData.Player = tile.player;
+            targetData = targeting(targetData, tile);
           }
         });
         break;
@@ -76,10 +70,7 @@ export function move(us, gb) {
         //Gather properties of tile West of current position
         gb.forEach(tile => {
           if (tile.x === us.x + 1 && tile.y === us.y) {
-            targetData.XPos = tile.x;
-            targetData.YPos = tile.y;
-            targetData.Direction = tile.direction;
-            targetData.Player = tile.player;
+            targetData = targeting(targetData, tile);
           }
         });
         break;
@@ -87,10 +78,7 @@ export function move(us, gb) {
         // Gather properties of tile East of current position
         gb.forEach(tile => {
           if (tile.x === us.x - 1 && tile.y === us.y) {
-            targetData.XPos = tile.x;
-            targetData.YPos = tile.y;
-            targetData.Direction = tile.direction;
-            targetData.Player = tile.player;
+            targetData = targeting(targetData, tile);
           }
         });
         break;
@@ -128,18 +116,27 @@ export function move(us, gb) {
 // ----------------------------------------------------------
 
 // Checks the outer bounds of the game board
-function BoundsCheck(us) {
+function BoundsCheck(us, gb) {
+  const lastPos = gb[gb.length - 1];
   if (us.x === 0 && us.direction === C.DIRECTION_WEST) {
     return false;
-  } else if (us.x === 2 && us.direction === C.DIRECTION_EAST) {
+  } else if (us.x === lastPos.x && us.direction === C.DIRECTION_EAST) {
     return false;
   } else if (us.y === 0 && us.direction === C.DIRECTION_NORTH) {
     return false;
-  } else if (us.y === 2 && us.direction === C.DIRECTION_SOUTH) {
+  } else if (us.y === lastPos.y && us.direction === C.DIRECTION_SOUTH) {
     return false;
   } else {
     return true;
   }
+}
+
+function targeting(targetData, tile) {
+  targetData.XPos = tile.x;
+  targetData.YPos = tile.y;
+  targetData.Direction = tile.direction;
+  targetData.Player = tile.player;
+  return targetData;
 }
 
 // eats the player
