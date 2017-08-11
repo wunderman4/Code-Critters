@@ -40,31 +40,15 @@ export function rotate(input, us) {
 
 export function move(us, gb) {
   // input = usermove, us == userState, gb  == gameBoard
-  var targetData = {
+  const targetData = {
     Player: "",
     Direction: "",
     XPos: "",
     YPos: ""
   };
-  var valid = true;
-
-  // Checking for out of bounds moves.
-  if (us.x === 0 && us.direction === C.DIRECTION_WEST) {
-    valid = false;
-    console.log(`Cant move ${us.direction}`);
-  } else if (us.x === 2 && us.direction === C.DIRECTION_EAST) {
-    valid = false;
-    console.log(`Cant move ${us.direction}`);
-  } else if (us.y === 0 && us.direction === C.DIRECTION_NORTH) {
-    valid = false;
-    console.log(`Cant move ${us.direction}`);
-  } else if (us.y === 2 && us.direction === C.DIRECTION_SOUTH) {
-    valid = false;
-    console.log(`Cant move ${us.direction}`);
-  }
 
   // Gathering target position data.
-  if (valid) {
+  if (BoundsCheck(us)) {
     switch (us.direction) {
       case C.DIRECTION_NORTH:
         // Gather properties of tile South of current position
@@ -76,7 +60,6 @@ export function move(us, gb) {
             targetData.Player = tile.player;
           }
         });
-        console.log(targetData);
         break;
       case C.DIRECTION_SOUTH:
         // Gather properties of tile North of current position
@@ -88,7 +71,6 @@ export function move(us, gb) {
             targetData.Player = tile.player;
           }
         });
-        console.log(targetData);
         break;
       case C.DIRECTION_EAST:
         //Gather properties of tile West of current position
@@ -100,7 +82,6 @@ export function move(us, gb) {
             targetData.Player = tile.player;
           }
         });
-        console.log(targetData);
         break;
       case C.DIRECTION_WEST:
         // Gather properties of tile East of current position
@@ -112,32 +93,62 @@ export function move(us, gb) {
             targetData.Player = tile.player;
           }
         });
-        console.log(targetData);
         break;
       default:
         break;
     }
 
-    if (
-      targetData.Direction === C.DIRECTION_NULL ||
-      (targetData.targetPlayer === C.PLAYER_ENEMY &&
-        targetData.targetDirection !== C.DIRECTION_NULL)
+    if (targetData.Direction === C.DIRECTION_NULL) {
+      eatUm(us, gb, targetData);
+    } else if (
+      us.direction === C.DIRECTION_NORTH &&
+      targetData.Direction !== C.DIRECTION_SOUTH
     ) {
-      // then move the user to the target tile.
-      targetData.player = C.PLAYER_USER;
-      targetData.direction = us.direction;
-      us.player = C.PLAYER_OPEN;
-      us.direction = C.DIRECTION_NULL;
-      // need to map or foreach new positions into gameboard then return it ----------- needs work
-      const newBoard = gb.forEach(tile => {
-        if (tile.x === targetData.XPos && tile.y === targetData.YPos) {
-          tile.direction = targetData.direction;
-          tile.player = targetData.player;
-        }
-      });
-      return newBoard;
+      eatUm(us, gb, targetData);
+    } else if (
+      us.direction === C.DIRECTION_SOUTH &&
+      targetData.Direction !== C.DIRECTION_NORTH
+    ) {
+      eatUm(us, gb, targetData);
+    } else if (
+      us.direction === C.DIRECTION_EAST &&
+      targetData.Direction !== C.DIRECTION_WEST
+    ) {
+      eatUm(us, gb, targetData);
+    } else if (
+      us.direction === C.DIRECTION_WEST &&
+      targetData.Direction !== C.DIRECTION_EAST
+    ) {
+      eatUm(us, gb, targetData);
     } else {
       // bounce
     }
   }
+}
+// ----------------------------------------------------------
+
+// Checks the outer bounds of the game board
+function BoundsCheck(us) {
+  if (us.x === 0 && us.direction === C.DIRECTION_WEST) {
+    return false;
+  } else if (us.x === 2 && us.direction === C.DIRECTION_EAST) {
+    return false;
+  } else if (us.y === 0 && us.direction === C.DIRECTION_NORTH) {
+    return false;
+  } else if (us.y === 2 && us.direction === C.DIRECTION_SOUTH) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+// eats the player
+function eatUm(us, gb, targetData) {
+  const tile = gb.find(tile => {
+    return tile.x === targetData.XPos && tile.y === targetData.YPos;
+  });
+  tile.direction = us.direction;
+  tile.player = C.PLAYER_USER;
+  us.player = C.PLAYER_OPEN;
+  us.direction = C.DIRECTION_NULL;
 }

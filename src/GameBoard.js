@@ -11,7 +11,7 @@ class GameBoard extends Component {
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 2, y: 0 },
       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_EAST, x: 0, y: 1 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 1 },
-      { player: C.PLAYER_ENEMY, direction: C.DIRECTION_SOUTH, x: 2, y: 1 },
+      { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 2, y: 1 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 0, y: 2 },
       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 2 },
       { player: C.PLAYER_USER, direction: C.DIRECTION_WEST, x: 2, y: 2 }
@@ -20,14 +20,9 @@ class GameBoard extends Component {
 
   // Entry point for user moves, currently set to test movement of Player.
   userChoice = e => {
-    var userState = ""; // used to pass user state to additonal methods.;
-    var currentBoard = this.state.tiles;
-
-    this.state.tiles.forEach(tile => {
-      if (tile.player === C.PLAYER_USER) {
-        userState = tile;
-      }
-    });
+    const userState = this.state.tiles.find(
+      tile => tile.player === C.PLAYER_USER
+    );
 
     var direction = userState.direction; // used to set new direction of user.
 
@@ -36,11 +31,7 @@ class GameBoard extends Component {
         direction = rotate(C.DIRECTION_CLOCKWISE, userState);
         break;
       case "ArrowUp":
-        const updatedBoard = move(userState, currentBoard);
-        this.setState({
-          tiles: updatedBoard
-        });
-        console.log(direction);
+        move(userState, this.state.tiles);
         break;
       case "ArrowLeft":
         direction = rotate(C.DIRECTION_COUNTERCLOCKWISE, userState);
@@ -60,10 +51,8 @@ class GameBoard extends Component {
 
   componentDidMount() {
     window.addEventListener("keydown", this.userChoice);
-    console.log(JSON.stringify(this.state.tiles));
   }
   render() {
-    //console.log(this.state.tiles);
     return (
       <div className="board">
         {this.state.tiles.map(t =>
