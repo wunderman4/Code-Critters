@@ -2,34 +2,17 @@ import React, { Component } from "react";
 import * as C from "./Constants.js";
 import Tile from "./Tile.js";
 import { rotate, move } from "./MoveLogic.js";
+import { getBoard } from "./util";
 
 class GameBoard extends Component {
   state = {
-    tiles: [
-      { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 0, y: 0 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 0 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 2, y: 0 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 0 },
-      { player: C.PLAYER_ENEMY, direction: C.DIRECTION_EAST, x: 0, y: 1 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 1 },
-      { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 2, y: 1 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 1 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 0, y: 2 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 2 },
-      { player: C.PLAYER_USER, direction: C.DIRECTION_WEST, x: 2, y: 2 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 2 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 0, y: 3 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 1, y: 3 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 2, y: 3 },
-      { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 3 }
-    ]
+    tiles: getBoard()
   };
 
   // Entry point for user moves, currently set to test movement of Player.
   userChoice = e => {
-    const userState = this.state.tiles.find(
-      tile => tile.player === C.PLAYER_USER
-    );
+    const userState =
+      this.state.tiles.find(tile => tile.player === C.PLAYER_USER) || {};
 
     var direction = userState.direction; // used to set new direction of user.
 
@@ -57,6 +40,7 @@ class GameBoard extends Component {
   };
 
   componentDidMount() {
+    console.log(this.state.tiles);
     window.addEventListener("keydown", this.userChoice);
   }
   render() {
@@ -69,6 +53,7 @@ class GameBoard extends Component {
             direction={t.direction}
             x={t.x}
             y={t.y}
+            //size={}
           />
         )}
       </div>
@@ -78,7 +63,7 @@ class GameBoard extends Component {
 
 export default GameBoard;
 
-//       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 0, y: 0 },
+// { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 0, y: 0 },
 //       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 0 },
 //       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 2, y: 0 },
 //       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_EAST, x: 0, y: 1 },
@@ -87,3 +72,20 @@ export default GameBoard;
 //       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 0, y: 2 },
 //       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 2 },
 //       { player: C.PLAYER_USER, direction: C.DIRECTION_WEST, x: 2, y: 2 }
+
+//       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 0, y: 0 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 0 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 2, y: 0 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 0 },
+//       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_EAST, x: 0, y: 1 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 1 },
+//       { player: C.PLAYER_ENEMY, direction: C.DIRECTION_NORTH, x: 2, y: 1 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 1 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 0, y: 2 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_NULL, x: 1, y: 2 },
+//       { player: C.PLAYER_USER, direction: C.DIRECTION_WEST, x: 2, y: 2 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 2 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 0, y: 3 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 1, y: 3 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 2, y: 3 },
+//       { player: C.PLAYER_OPEN, direction: C.DIRECTION_WEST, x: 3, y: 3 }

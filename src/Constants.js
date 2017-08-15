@@ -16,3 +16,6 @@ export const MOVE_MAKE = "move";
 export const MOVE_VALID = "valid"; // valid forward move to unoccupied tile.
 export const MOVE_INVALID = "invalid"; // invalid move to either off gird or head to head with enemy.
 export const MOVE_ATTACK = "attack"; // valid forward move to occupied tile.
+
+export const SCALE = 0.8333;
+export const SIZE = 10;
